@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMeals, getLoading, getMealList } from '../redux/features/mealSlice';
 import { Link } from 'react-router-dom';
+import { SyncLoader } from 'react-spinners';
 
 
 const MealList = () => {
@@ -34,7 +35,7 @@ const MealList = () => {
 
     return (
         <div className='meallist'>
-            {loading && <h2>Loading....</h2>}
+            {loading && <SyncLoader loading={loading} className="loader" size={30} />}
             {!loading && (
                 modifiedMeals.map(meal => {
                     const { id, name, category, image } = meal;

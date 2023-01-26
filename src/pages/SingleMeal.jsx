@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { fetchSingleMeal, getLoading, getMeal } from '../redux/features/mealSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { SyncLoader } from 'react-spinners';
+import AnimatedPage from '../components/AnimatedPage';
 
 const SingleMeal = () => {
 
@@ -62,40 +64,47 @@ const SingleMeal = () => {
 
 
     return (
-        <div>
-            {loading && (
-                <h2>Loading...</h2>
-            )}
-            {!loading && !modifiedMeal && <h2>No Meal To Display</h2>}
-            {modifiedMeal && (
-                <div>
-                    {loading && <p>Loading...</p>}
-                    {!loading && (
-                        <>
-                            <Link to="/"><button>Go Back</button></Link>
-                            <p>{modifiedMeal.name}</p>
-                            <img src={modifiedMeal.image} />
-                            <p>{modifiedMeal.category}</p>
-                            <p>{modifiedMeal.country}</p>
-                            <iframe width="420" height="315"
-                                src={`https://www.youtube.com/embed/${modifiedMeal.youtube}`}>
-                            </iframe>
 
-                            <ul>
-                                {/* 1st way is using optional chaining */}
-                                {/* modifiedMeal.ingredients?.map() etc */}
-                                {/* 2nd way of checking if array exists  */}
-                                {modifiedMeal.ingredients && modifiedMeal.ingredients.map(i => {
-                                    if (i !== null && i !== "") {
-                                        return <li>{i}</li>
-                                    }
-                                })}
-                            </ul>
-                        </>
-                    )}
-                </div>
-            )}
-        </div>
+        <AnimatedPage>
+            <div className='singlemeal'>
+
+
+                {!loading && !modifiedMeal && <h2>No Meal To Display</h2>}
+                {modifiedMeal && (
+                    <div className='meal'>
+                        {loading && <SyncLoader loading={loading} className="loader" size={30} />}
+                        {!loading && (
+                            <>
+                                <p className='name'>{modifiedMeal.name}</p>
+                                <p className='category'>{modifiedMeal.category}</p>
+                                <img src={modifiedMeal.image} />
+                                <p className='ingredientTitle'>Ingredients</p>
+
+                                <ul className='ingredients'>
+                                    {/* 1st way is using optional chaining */}
+                                    {/* modifiedMeal.ingredients?.map() etc */}
+                                    {/* 2nd way of checking if array exists  */}
+                                    {modifiedMeal.ingredients && modifiedMeal.ingredients.map(i => {
+                                        if (i !== null && i !== "") {
+                                            return <li>{i}</li>
+                                        }
+                                    })}
+                                </ul>
+
+                                <iframe width="500" height="315"
+                                    src={`https://www.youtube.com/embed/${modifiedMeal.youtube}`}>
+                                </iframe>
+                            </>
+                        )}
+                    </div>
+                )}
+
+                <Link to="/"><button>Go Back</button></Link>
+                {loading && (
+                    <SyncLoader loading={loading} className="loader" size={30} />
+                )}
+            </div>
+        </AnimatedPage>
     )
 }
 
