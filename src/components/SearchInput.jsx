@@ -16,7 +16,7 @@ const SearchInput = () => {
     }
 
     return (
-        <div>
+        <div className='search'>
             <input
                 type="text"
                 placeholder='search meal'

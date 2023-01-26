@@ -33,14 +33,13 @@ const MealList = () => {
 
 
     return (
-        <div>
+        <div className='meallist'>
             {loading && <h2>Loading....</h2>}
             {!loading && (
                 modifiedMeals.map(meal => {
                     const { id, name, category, image } = meal;
                     return (
-                        <div key={id}>
-                            <p>{id}</p>
+                        <div key={id} className="meal">
                             <p>{name}</p>
                             <p>{category}</p>
                             <img src={image} />
